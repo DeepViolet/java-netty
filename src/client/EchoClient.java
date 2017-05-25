@@ -9,6 +9,7 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
 import java.net.InetSocketAddress;
+import java.util.Scanner;
 
 /**
  * Created by liuhuiyi on 2017/5/25.
@@ -39,6 +40,12 @@ public class EchoClient {
                     });
             ChannelFuture future = bootstrap.connect().sync();
             future.channel().writeAndFlush("I am a common client");
+            Scanner scanner = new Scanner(System.in);
+            while (true) {
+                String line = scanner.nextLine();
+                if (line.equals("exit")) break;
+                future.channel().writeAndFlush(line);
+            }
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();
