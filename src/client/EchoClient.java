@@ -38,19 +38,6 @@ public class EchoClient {
                         }
                     });
             ChannelFuture future = bootstrap.connect().sync();
-            future.addListener(new ChannelFutureListener() {
-
-                public void operationComplete(ChannelFuture future) throws Exception {
-                    if (future.isSuccess()) {
-                        System.out.println("client connected");
-
-                    } else {
-                        System.out.println("server attemp failed");
-                        future.cause().printStackTrace();
-                    }
-
-                }
-            });
             future.channel().writeAndFlush("I am a common client");
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {
